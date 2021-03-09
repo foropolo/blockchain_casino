@@ -1,0 +1,171 @@
+
+<!doctype html>
+<html lang="el">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>Καζίνο του Foro</title>
+    <style>
+      body {
+        background: rgb(123, 192, 126);
+      }
+      
+      .content {
+        max-width: 5000px;
+        margin: auto;
+        background: rgb(152, 218, 156);
+        padding: 100px;
+      }
+      </style>
+  </head>
+  <body style="text-align:center;" class = "content">
+    <h1>Καλώς ήρθατε στο καζίνο του Foro</h1>
+    <img src="dice_photo.jpg" width="250" height="300">
+    <h4>Κανόνες του καζίνο</h4>
+    <p style="color:rgb(24, 3, 3);">Το ζάρι έχει 10 πλευρές.<br>Διαλέξε αν το ζάρι θα έρθει πάνω απο 5 ή κάτω απο 5. <br>Αν η ζαριά φέρει το αποτέλεσμα που πόνταρες θα σου δωθούν τα διπλασια χρήματα απο αυτά
+    που πόνταρες.<br>Αν έρθει το νουμερο 5 ή το αντίθετο από αυτό που πόνταρες,κερδίζει η "μάνα" δηλαδή το καζίνο του Foro </p>
+    <form id="contract-form">
+      <hr size="10" width="100%" color="red"> 
+      <input type="checkbox" id="over_5" name="dice_selector" value="over_5">
+      <label for="over_5">Μεγαλύτερο του 5</label><br>
+      <input type="checkbox" id="under_5" name="dice_selector" value="under_5">
+      <label for="under_5">Μικρότερο του 5</label><br>
+      <hr size="10" width="100%" color="red">  
+      <div class="form-group">
+        <h3>Αποστολή χρημάτων μέσω συμβολαίου:</h3>
+        <label for="Sender Address">Γράψε την δημόσια διεύθυνση του πορτοφολιού σου  (ETH)</label>
+        <input value="" type="text" class="form-control" id="fromAddress" aria-describedby="fromAddressHelp" placeholder="Εισάγετε την διεύθυνσή σας" required="true">
+        <small id="fromAddressHelp" class="form-text text-muted">Θα πρέπει τελικά να δώσετε έγκριση της μεταφοράς από το Metamask.</small>
+      </div>
+      
+          <div class="form-group">
+            <label for="Amount">Ποσό</label>
+            <input value="1" type="text" class="form-control" id="amount" aria-describedby="amountHelp" placeholder="Amount to send in ETH" required="true">
+            <small id="amountHelp" class="form-text text-muted">Πόσα χρήματα θα στείλετε σε Ether. Πρέπει το ποσό να είναι μεγαλύτερο του 0</small>
+          </div>
+      <button type="submit" class="btn btn-primary">Ποντάρε</button>
+      <div id="deposit-result">Πατώντας το κουμπί "Ποντάρε" τα χρήματά σας θα πιστωθούν στο συμβόλαιο και το ζάρι θα γυρίσει.</div>
+      <p><br>Ιστορικό</p>
+      <p id="history"></p>
+    </form>
+    <hr>
+    
+    <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js@1.2.9/dist/web3.min.js"></script>
+    <script src="contractAbi.js"></script>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <script>
+      window.addEventListener('load', async () => { 
+        // Modern dapp browsers...
+        if (window.ethereum) {
+          window.web3 = new Web3(ethereum);
+          try {
+            // Request account access if needed
+            await ethereum.enable();
+            // Acccounts now exposed
+            web3.eth.sendTransaction({/* ... */});
+          } catch (error) {
+            // User denied account access...
+          }
+        }
+        // Legacy dapp browsers...
+        else if (window.web3) {
+          window.web3 = new Web3(web3.currentProvider);
+          // Acccounts always exposed
+          web3.eth.sendTransaction({/* ... */});
+        }
+        // Non-dapp browsers...
+        else {
+          console.log('Non-Ethereum browser detected. You should consider trying MetaMask!');
+        }
+      });
+      if ( typeof web3 != 'undefined' ) {
+        web3 = new Web3(web3.currentProvider);
+      } else {
+        web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+      }
+      web3.eth.defaultAccount = web3.eth.accounts[0];
+    </script>
+    
+	<script>
+      // change this to the ACTUAL contract address that you created on truffle migrate
+      var contractAddress = "0x56aB4d561B388bBeD921a84a71953D1344169F3B";
+      var ApprovalContract = new web3.eth.Contract(abi,contractAddress);
+      
+	  //make sure that addresses are legit
+      $('#contract-form').submit(function() {
+        event.preventDefault();
+        //check which checkbox the user choose
+        var x = document.getElementById("over_5");
+        var y = document.getElementById("under_5");
+        if(x.checked==true){
+          var guess=true;
+        }
+        else if(y.checked==true){
+          var guess=false;
+        }
+        else {
+          alert('Έχετε ξεχάσει να ποντάρεται. Επιλέξτε αριθμό που θέλετε να ποντάρετε');
+          return;
+        }
+        var fromAddress = $('#fromAddress').val();
+        
+        var amount = $('#amount').val();
+        if (web3.utils.isAddress(fromAddress) != true) {
+          alert('Δεν δώσατε σωστή διεύθυνση αποστολέα.');
+          return;
+        }
+        
+        if (amount == 0){
+          alert('Πρέπει να στείλετε περισσότερα από 0 ETH');
+          return;
+         }
+        
+        // all is good, let's call our contract deposit
+      ApprovalContract.methods.winOrLose(Boolean(guess)).send({from: fromAddress,gas:1000000,value: web3.utils.toWei(amount, 'ether')},
+            function(error, result) {
+              if (error) {
+                console.log('error: ' + error);
+                $('#deposit-result').html('<b>Error: </b>' + error);
+              }
+              else {
+                console.log('result: ' + result);
+              $('#deposit-result').html('Success TX: <b>' + result + '</b>');
+              }
+              
+            });
+
+      
+    });
+    </script>
+    
+    <script>
+      //script οπου επιτρεπει μονο 1 επιλογη να διαλεξει ο χρηστης απο το και οχι ταυτοχρονα και τις 2
+      $("input:checkbox").on('click', function() {
+        // in the handler, 'this' refers to the box clicked on
+        var $box = $(this);
+          if ($box.is(":checked")) {
+            // the name of the box is retrieved using the .attr() method
+            // as it is assumed and expected to be immutable
+            var group = "input:checkbox[name='" + $box.attr("name") + "']";
+            // the checked state of the group/box on the other hand will change
+            // and the current value is retrieved using .prop() method
+            $(group).prop("checked", false);
+            $box.prop("checked", true);
+          } 
+          else {
+            $box.prop("checked", false);
+          }
+      });
+    </script>
+    
+    </body>
+</html>

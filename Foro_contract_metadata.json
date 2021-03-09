@@ -1,0 +1,133 @@
+{
+	"compiler": {
+		"version": "0.5.17+commit.d19bba13"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [],
+				"payable": true,
+				"stateMutability": "payable",
+				"type": "constructor"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "mysteryNumber_",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "bool",
+						"name": "isWinner",
+						"type": "bool"
+					}
+				],
+				"name": "results",
+				"type": "event"
+			},
+			{
+				"constant": true,
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "number",
+						"type": "uint256"
+					},
+					{
+						"internalType": "bool",
+						"name": "guess",
+						"type": "bool"
+					}
+				],
+				"name": "determineWinner",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"payable": false,
+				"stateMutability": "pure",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [],
+				"name": "fundGame",
+				"outputs": [],
+				"payable": true,
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"internalType": "bool",
+						"name": "guess",
+						"type": "bool"
+					}
+				],
+				"name": "winOrLose",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "mysteryNumber_",
+						"type": "uint256"
+					},
+					{
+						"internalType": "bool",
+						"name": "isWinner",
+						"type": "bool"
+					}
+				],
+				"payable": true,
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [],
+				"name": "withdrawFunds",
+				"outputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"methods": {}
+		},
+		"userdoc": {
+			"methods": {}
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"browser/lastcontract.sol": "dicebet"
+		},
+		"evmVersion": "istanbul",
+		"libraries": {},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"browser/lastcontract.sol": {
+			"keccak256": "0x1439399f503d1b88699e46afdb44a2a12604c9bb702866308cefa1082aff060d",
+			"urls": [
+				"bzz-raw://570b69df939db14b65cb37f0d9545bdff6515e35e4ddf78a2597ef7198c9b67c",
+				"dweb:/ipfs/QmcsifT1E5iDiP7Vbk9gouyKTwbTVKr4sFQwDWo3pzz4ET"
+			]
+		}
+	},
+	"version": 1
+}
